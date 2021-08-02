@@ -1,0 +1,69 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: tcb-covid-vac-tracking
+spec:
+  ports:
+  - port: 8000
+  selector:
+    app: tcb-covid-vac-tracking
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tcb-covid-vac-tracking
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: tcb-covid-vac-tracking
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+  minReadySeconds: 5 
+  template:
+    metadata:
+      labels:
+        app: tcb-covid-vac-tracking
+    spec:
+      containers:
+      - name: tcb-covid-vac-tracking
+        image: thecloudbootcamp/covid-vac-tracking-app:latest
+        ports:
+        - containerPort: 8000
+        resources:
+          requests:
+            cpu: 100m
+            memory: 100Mi
+        env:
+        - name: AWS_BUCKET
+          value: "tcb-ccnl1-bucket3"
+        - name: S3_ACCESS_KEY
+          value: "#######3"
+        - name: S3_SECRET_ACCESS_KEY
+          value: "#########3"
+        - name: DB_HOST_NAME
+          value: "172.21.0.3"
+        - name: DB_USER
+          value: "app"
+        - name: DB_PASSWORD
+          value: "admin123456"
+        - name: DB_NAME
+          value: "dbvaccinated"
+        - name: DB_PORT
+          value: "3306"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: tcb-covid-vac-tracking
+spec:
+  type: LoadBalancer
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 8000
+  selector:
+    app: tcb-covid-vac-tracking
