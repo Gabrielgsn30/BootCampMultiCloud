@@ -7,3 +7,6 @@ A Missao 03 foi basicamente um teste do DockerFile, utilizamos o Sheel do Google
 A Missão 04 e última, ja fizemos a aplicação realmente funcionar no Kubernetes, além de restaurar um dump no GoogleCloud do banco de dados que rodava on premise e também restauramos todos os pdfs dos clientes que ficavam tambem on premise la na AWS no bucket.
 Por fim a arquitetura ficou dessa maneira:
 ![alt text](https://github.com/Gabrielgsn30/BootCampMultiCloud/blob/main/Missao04/arquitetura.png)
+
+projeto está no ar, pode conferir no link:
+http://35.231.89.196/
